@@ -1,44 +1,7 @@
 name: Dispatch build bottle (for chosen OS versions)
 
-run-name: Build bottle of ${{ inputs.formula }} on ${{ inputs.runner }}
-
 on:
   workflow_dispatch:
-    inputs:
-      runner:
-        description: Build runner(s) (macOS version or Linux)
-        required: true
-      formula:
-        description: Formula name
-        required: true
-      timeout:
-        description: "Build timeout (in minutes, default: 60 minutes)"
-        default: "60"
-        required: false
-      issue:
-        description: Issue number, where comment on failure would be posted
-        required: false
-      upload:
-        description: "Upload built bottles? (default: false)"
-        type: boolean
-        default: false
-        required: false
-
-env:
-  HOMEBREW_DEVELOPER: 1
-  HOMEBREW_GITHUB_ACTIONS: 1
-  HOMEBREW_NO_AUTO_UPDATE: 1
-  HOMEBREW_NO_INSTALL_FROM_API: 1
-  RUN_URL: ${{github.event.repository.html_url}}/actions/runs/${{github.run_id}}
-  DISPATCH_BUILD_BOTTLE_SENDER: ${{ github.event.sender.login }}
-  DISPATCH_BUILD_BOTTLE_FORMULA: ${{ inputs.formula }}
-  DISPATCH_BUILD_BOTTLE_RUNNER: ${{ inputs.runner }}
-  DISPATCH_BUILD_BOTTLE_TIMEOUT: ${{ inputs.timeout }}
-  DISPATCH_BUILD_BOTTLE_ISSUE: ${{ inputs.issue }}
-  DISPATCH_BUILD_BOTTLE_UPLOAD: ${{ inputs.upload }}
-
-# Intentionally the same as dispatch-rebottle
-concurrency: bottle-${{ github.event.inputs.formula }}
 
 permissions:
   contents: read
@@ -91,20 +54,10 @@ jobs:
         shell: /bin/bash -e {0}
         working-directory: ${{matrix.workdir || github.workspace}}
     env:
-      GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      HOMEBREW_GITHUB_API_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      GITHUB_TOKEN: ${{secrets.HOMEBREW_GITHUB_PUBLIC_REPO_TOKEN}}
+      HOMEBREW_GITHUB_API_TOKEN: ${{secrets.HOMEBREW_GITHUB_PUBLIC_REPO_TOKEN}}
       BOTTLES_DIR: ${{ matrix.workdir || github.workspace }}/bottles
     steps:
-      - name: ${{inputs.formula}}
-        id: print_details
-        run: |
-          echo sender="${DISPATCH_BUILD_BOTTLE_SENDER}"
-          echo formula="${DISPATCH_BUILD_BOTTLE_FORMULA}"
-          echo runner="${DISPATCH_BUILD_BOTTLE_RUNNER}"
-          echo timeout="${DISPATCH_BUILD_BOTTLE_TIMEOUT}"
-          echo issue="${DISPATCH_BUILD_BOTTLE_ISSUE}"
-          echo upload="${DISPATCH_BUILD_BOTTLE_UPLOAD}"
-
       - name: Pre-test steps
         uses: Homebrew/actions/pre-build@master
         with:

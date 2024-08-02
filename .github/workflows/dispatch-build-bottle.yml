@@ -7,56 +7,19 @@ permissions:
   contents: read
 
 jobs:
-  prepare:
-    runs-on: ubuntu-22.04
-    outputs:
-      runners: ${{steps.runner-matrix.outputs.result}}
-    steps:
-      - name: Prepare runner matrix
-        id: runner-matrix
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const macOSRegex = /^\d+(?:\.\d+)?(?:-arm64)?$/;
-            const linuxRegex = /^(ubuntu-|linux-self-hosted-)/;
-            return context.payload.inputs.runner.split(",")
-                                                .map(s => s.trim())
-                                                .filter(Boolean)
-                                                .map(s => {
-              if (macOSRegex.test(s) && s != "11-arm64") // Ephemeral runners
-                return {runner: `${s}-${context.runId}`, cleanup: false};
-              else if (linuxRegex.test(s))
-                return {
-                  runner:    s,
-                  container: {
-                    image:   "ghcr.io/homebrew/ubuntu22.04:master",
-                    options: "--user=linuxbrew -e GITHUB_ACTIONS_HOMEBREW_SELF_HOSTED"
-                  },
-                  workdir:   "/github/home",
-                  cleanup:   false
-                };
-              else
-                return {runner: s, cleanup: true};
-            });
-
   bottle:
-    needs: prepare
-    strategy:
-      matrix:
-        include: ${{fromJson(needs.prepare.outputs.runners)}}
-    runs-on: ${{matrix.runner}}
-    container: ${{matrix.container}}
-    timeout-minutes: ${{fromJson(github.event.inputs.timeout)}}
+    runs-on: ubuntu-latest
+    container: ghcr.io/homebrew/ubuntu22.04:master
     permissions:
       contents: read
     defaults:
       run:
         shell: /bin/bash -e {0}
-        working-directory: ${{matrix.workdir || github.workspace}}
+        working-directory: ${{github.workspace}}
     env:
       GITHUB_TOKEN: ${{secrets.HOMEBREW_GITHUB_PUBLIC_REPO_TOKEN}}
       HOMEBREW_GITHUB_API_TOKEN: ${{secrets.HOMEBREW_GITHUB_PUBLIC_REPO_TOKEN}}
-      BOTTLES_DIR: ${{ matrix.workdir || github.workspace }}/bottles
+      BOTTLES_DIR: ${{ github.workspace }}/bottles
     steps:
       - name: Pre-test steps
         uses: Homebrew/actions/pre-build@master

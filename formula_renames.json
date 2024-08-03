@@ -152,6 +152,7 @@
   "ssreflect": "math-comp",
   "tachyon": "alluxio",
   "tensorflow": "libtensorflow",
+  "tepl": "libgedit-tepl",
   "thrift@0.90": "thrift@0.9",
   "todolist": "ultralist",
   "tomcat7": "tomcat@7",

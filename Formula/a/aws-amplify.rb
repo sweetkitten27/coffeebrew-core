@@ -1,27 +1,26 @@
-require "language/node"
-
 class AwsAmplify < Formula
   desc "Build full-stack web and mobile apps in hours. Easy to start, easy to scale"
   homepage "https://aws.amazon.com/amplify"
-  url "https://registry.npmjs.org/@aws-amplify/cli-internal/-/cli-internal-12.12.4.tgz"
-  sha256 "15cffbaa789c69981262fec17e24ce2a0df56219d01ea56bd2ed48270f27fbcf"
+  url "https://registry.npmjs.org/@aws-amplify/cli-internal/-/cli-internal-12.12.5.tgz"
+  sha256 "b19d161067d1f8aeb1abaff5115bdf3d51e4b994b6defdfc6015490ee6fbf9b9"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "9ee229a7753b997822968bbd7efe8f2967b9f3c045395e9fe09f452d4dbd9e92"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "9ee229a7753b997822968bbd7efe8f2967b9f3c045395e9fe09f452d4dbd9e92"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "9ee229a7753b997822968bbd7efe8f2967b9f3c045395e9fe09f452d4dbd9e92"
-    sha256 cellar: :any_skip_relocation, sonoma:         "68882551cfc74fd27349b14224f417ee1b4d592fda76bf4ddbfad27dcd216d05"
-    sha256 cellar: :any_skip_relocation, ventura:        "68882551cfc74fd27349b14224f417ee1b4d592fda76bf4ddbfad27dcd216d05"
-    sha256 cellar: :any_skip_relocation, monterey:       "68882551cfc74fd27349b14224f417ee1b4d592fda76bf4ddbfad27dcd216d05"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e229b175b0733b88e3dc526336e08b24b1d98ccd9b0d3db859be3840857bab47"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "364145b800db47837ffa42d14a00e09407875b9e9e882ec9b4f464e2dc2192eb"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "364145b800db47837ffa42d14a00e09407875b9e9e882ec9b4f464e2dc2192eb"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "364145b800db47837ffa42d14a00e09407875b9e9e882ec9b4f464e2dc2192eb"
+    sha256 cellar: :any_skip_relocation, sonoma:         "efaaf9a3c671a836b89b1985245d97188d70358b2510afdc4f45920324bc2f90"
+    sha256 cellar: :any_skip_relocation, ventura:        "efaaf9a3c671a836b89b1985245d97188d70358b2510afdc4f45920324bc2f90"
+    sha256 cellar: :any_skip_relocation, monterey:       "efaaf9a3c671a836b89b1985245d97188d70358b2510afdc4f45920324bc2f90"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e09d4fadd372eddfb1d94943a673c0d1fb90e21f7c65d052322d5149fc05fb0b"
   end
 
   depends_on "node"
 
   def install
-    system "npm", "install", *Language::Node.std_npm_install_args(libexec)
-    bin.install_symlink Dir["#{libexec}/bin/*"]
+    system "npm", "install", *std_npm_args
+    bin.install_symlink libexec.glob("bin/*")
 
     unless Hardware::CPU.intel?
       rm_r "#{libexec}/lib/node_modules/@aws-amplify/cli-internal/node_modules" \

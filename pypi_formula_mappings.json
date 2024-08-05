@@ -1,4 +1,7 @@
 {
+  "aider": {
+    "exclude_packages": ["certifi", "cffi", "numpy", "pillow", "scipy"]
+  },
   "aiven-client": {
     "exclude_packages": ["certifi"]
   },
@@ -542,7 +545,12 @@
     "exclude_packages": ["certifi", "numpy", "torch"]
   },
   "openstackclient": {
-    "extra_packages": ["python-barbicanclient", "python-cloudkittyclient", "python-designateclient", "python-glanceclient", "python-heatclient", "python-ironicclient", "python-magnumclient", "python-manilaclient", "python-mistralclient", "python-octaviaclient"],
+    "extra_packages": [
+      "python-barbicanclient", "python-cloudkittyclient", "python-designateclient",
+      "python-glanceclient", "python-heatclient", "python-ironicclient",
+      "python-magnumclient", "python-manilaclient", "python-mistralclient",
+      "python-octaviaclient", "setuptools"
+    ],
     "exclude_packages": ["certifi", "cryptography"]
   },
   "organize-tool": {

@@ -214,6 +214,7 @@ bindgen
 bingrep
 biodiff
 biome
+biosig
 bitrise
 bitwarden-cli
 bk
@@ -373,6 +374,7 @@ cherrytree
 chezmoi
 chibi-scheme
 chicken
+chisel-tunnel
 chkbit
 chkrootkit
 choose-rust
@@ -404,6 +406,7 @@ cliclick
 clifm
 clingo
 clipboard
+cloc
 clojure
 clojure-lsp
 clojurescript
@@ -423,6 +426,7 @@ clusterawsadm
 clusterctl
 clzip
 cmake-language-server
+cmark
 cmctl
 cmu-pocketsphinx
 cmus
@@ -641,6 +645,7 @@ dotnet
 dotslash
 dotter
 double-conversion
+dovi_tool
 doxygen
 dpkg
 dpp
@@ -1206,6 +1211,7 @@ ircd-hybrid
 iredis
 ispc
 istioctl
+isync
 itk
 ittapi
 ivy
@@ -1250,7 +1256,9 @@ jscpd
 jsdoc3
 json-fortran
 json2ts
+json2tsv
 jsonnet
+jsonrpc-glib
 jsontoolkit
 jsvc
 jtbl
@@ -1407,6 +1415,7 @@ libfabric
 libffi
 libfido2
 libfontenc
+libfs
 libgedit-gtksourceview
 libgeotiff
 libgetdata
@@ -1563,6 +1572,7 @@ lune
 lunzip
 luv
 lux
+lwtools
 lxc
 lychee
 lynis
@@ -1794,6 +1804,7 @@ nox
 npm-check-updates
 npth
 nq
+nrpe
 ns-3
 nsd
 nsq
@@ -1811,6 +1822,7 @@ nut
 nvc
 nvchecker
 nvimpager
+nvm
 nvtop
 nzbget
 oauth2_proxy
@@ -1843,6 +1855,7 @@ omega
 omniorb
 onednn
 onedrive
+onion-location
 onionprobe
 ooniprobe
 opa
@@ -2210,6 +2223,7 @@ rpki-client
 rpl
 rpmspectool
 rqlite
+rrdtool
 rswift
 rsyncy
 rsyslog
